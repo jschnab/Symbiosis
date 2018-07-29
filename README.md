@@ -17,17 +17,17 @@ The input file should be a csv file with a specific formatting different from th
 (see "test_colonisation.csv" in the same repository for an example).
 
 ## Generate and save a figure
-..* Select the graphical parameters you want by ticking options in menus "Group by" and "Color".
+* Select the graphical parameters you want by ticking options in menus "Group by" and "Color".
 
-..* Click on the "Process" menu and click on "Analyze csv file", it will open a pop-up and you can browse your file. It expects to see "Genotype" or "genotype" as a column header, the rest is detected automatically. A figure window will pop-up.
+* Click on the "Process" menu and click on "Analyze csv file", it will open a pop-up and you can browse your file. It expects to see "Genotype" or "genotype" as a column header, the rest is detected automatically. A figure window will pop-up.
 
-..* Click on the "File" menu and point on "Save as" to display the file type choice. Click on the file extension name to save your file in the same folder as your csv file. If you generate several figures by clicking on "Analyze csv file" several times, it will save the last figure generated.
+* Click on the "File" menu and point on "Save as" to display the file type choice. Click on the file extension name to save your file in the same folder as your csv file. If you generate several figures by clicking on "Analyze csv file" several times, it will save the last figure generated.
 
 ## Statistical analysis
-..* If you have not opened the csv file in PyMS yet, click on the "Process" menu and click on "Analyze csv file", it will open a 
+* If you have not opened the csv file in PyMS yet, click on the "Process" menu and click on "Analyze csv file", it will open a 
 pop-up and you can browse your file. It expects to see "Genotype" or "genotype" as a column header, the rest is detected 
 automatically. A figure window will pop-up.
 
-..* If you want to perform a statistical analysis, click on the "Statistics" menu and select the test you want by ticking one of 
+* If you want to perform a statistical analysis, click on the "Statistics" menu and select the test you want by ticking one of 
 them. You then need to select the genotypes you want to analyze in the "Select samples" menu. You can detach the menu by clicking on the top -------, so that you don't have to open the menu each time you select a genotype. Once you selected the genotypes of interest, click on "Perform statistical test" in the "Process" menu. The p-values returned by the test will be saved in a text file in the same folder as your csv file.
 
