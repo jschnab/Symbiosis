@@ -5,7 +5,7 @@ to perform statistical testing on your data to identify differences between grou
 
 ## System requirements
 PyMS was written in Python 3.5 and requires Pandas, Numpy, Matplotlib, Scipy and home-made Mann-Whitney and Dunn's statistical 
-tests which can be found in my [Statistics repository](../statistics).
+tests which can be found in my [Statistics repository](https://github.com/jschnab/statistics).
 PyMS is mainly tested on Windows (a bit on MacOS but some features may not work properly).
 
 ## Input data and file format
