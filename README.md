@@ -1,5 +1,5 @@
 ## Presentation
-The *Symbiosis* repository contains Python and R scripts for data analysis of mycorrhizal symbiosis colonization quantification. The scripts
+The *symbiosis* repository contains Python and R scripts for data analysis of mycorrhizal symbiosis colonization quantification. The scripts
 provide tools for data visualization and statistical analysis. Please read individual *readme* markdown files for details about the scripts.
 
 ## About the scripts
@@ -10,3 +10,6 @@ software also allows statistical testing using Mann-Whitney or Kruskal-Wallis-Du
 ### R scripts
 *colonization_genotype_grouping.R* and *colonization_structure_grouping.R* allow plotting of data and statistical testing using Mann-Whitney 
 or Kruskal-Wallis-Dunn tests.
+
+### Test file(s)
+*test_colonization.csv* contains data in the format which is read by the scripts of this repository.
