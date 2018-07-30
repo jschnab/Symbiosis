@@ -15,4 +15,4 @@ method (see [Paszkowski, U., Jakovleva, L., and Boller, T. (2006). Maize mutants
 symbiosis. Plant J. 47 165–173) or an equivalent method.](https://www.ncbi.nlm.nih.gov/pubmed/16762030))
 
 The input file should be a csv file with a specific formatting different from the "tidy data" specification (see "test_colonisation.csv" in 
-the same repository for an example).
+the same repository for an example, data from [Chiu, C. H., Choi, J., Paszkowski, U. (2018) Independent signalling cues underpin arbuscular mycorrhizal symbiosis and large lateral root induction in rice. New Phytologist. 217 552-557](https://www.ncbi.nlm.nih.gov/pubmed/29194644)).
