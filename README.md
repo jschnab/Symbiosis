@@ -10,6 +10,7 @@ software also allows statistical testing using Mann-Whitney or Kruskal-Wallis-Du
 ### R scripts
 *colonization_genotype_grouping.R* and *colonization_structure_grouping.R* allow plotting of data and statistical testing using Mann-Whitney 
 or Kruskal-Wallis-Dunn tests.
+*colonization_tidyverse.R* contains definition of functions for plotting of quantitative root colonization data using tydiverse, which shortens significantly the amount of instructions compared to previous scripts. Crossbar + scatter and barchart + scatter are available.
 
 ### Test file(s)
 *test_colonization.csv* contains data in the format which is read by the scripts of this repository.
