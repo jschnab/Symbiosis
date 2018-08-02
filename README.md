@@ -10,6 +10,7 @@ software also allows statistical testing using Mann-Whitney or Kruskal-Wallis-Du
 ### R scripts
 *colonization_genotype_grouping.R* and *colonization_structure_grouping.R* allow plotting of data and statistical testing using Mann-Whitney 
 or Kruskal-Wallis-Dunn tests.
+*colonization_tidyverse.R* contains definition of functions for plotting of quantitative root colonization data using tydiverse, which shortens significantly the amount of instructions compared to previous scripts. Crossbar + scatter and barchart + scatter are available.
 
 ### Test file(s)
-*test_colonization.csv* contains data in the format which is read by the scripts of this repository.
+*test_colonization.csv* contains data in the format which is read by the scripts of this repository (data from [Chiu, C. H., Choi, J., Paszkowski, U. (2018) Independent signalling cues underpin arbuscular mycorrhizal symbiosis and large lateral root induction in rice. New Phytologist. 217 552-557](https://www.ncbi.nlm.nih.gov/pubmed/29194644)).
