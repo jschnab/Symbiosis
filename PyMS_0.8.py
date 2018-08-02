@@ -46,6 +46,9 @@
 # 30/04/2018 dunn.test method='bh' in R is 'fdr_bh' in Python
 #            process_csv can read index "Genotype" and "genotype"
 
+# 02/08/2018 add instructions to remove NaN from dataframe before processing
+#            the name of the index is not a problem now (cf 30/04/2018)
+
 from tkinter import *
 from tkinter import filedialog
 import pandas as pd
@@ -350,10 +353,15 @@ combination"""
             Global.file_name = filedialog.askopenfilename()
 
             #read the csv file
-            try:
-                Global.col = pd.read_csv(Global.file_name, index_col = 'Genotype')
-            except ValueError:
-                Global.col = pd.read_csv(Global.file_name, index_col = 'genotype')
+            Global.col = pd.read_csv(Global.file_name)
+
+            #remove NaN values from data frame
+            index_name = Global.col.columns[0]
+            Global.col = Global.col.loc[~pd.isna(Global.col[index_name])]
+            Global.col = Global.col.dropna(1)
+
+            #set index as first column
+            Global.col = Global.col.set_index(index_name)
 
             #collect genotype names
             geno = []
@@ -367,7 +375,7 @@ combination"""
             number_rep = number_rep.reindex(geno)
 
             #collect names of fungal structures
-            Global.struct = Global.col.columns[0:]
+            Global.struct = Global.col.columns[:]
 
             #calculate medians
             col_group = Global.col.groupby(Global.col.index) # group data by genotype
@@ -470,10 +478,15 @@ combination"""
             Global.file_name = filedialog.askopenfilename()
 
             #read the csv file
-            try:
-                Global.col = pd.read_csv(Global.file_name, index_col = 'Genotype')
-            except ValueError:
-                Global.col = pd.read_csv(Global.file_name, index_col = 'genotype')
+            Global.col = pd.read_csv(Global.file_name)
+
+            #remove NaN values from data frame
+            index_name = Global.col.columns[0]
+            Global.col = Global.col.loc[~pd.isna(Global.col[index_name])]
+            Global.col = Global.col.dropna(1)
+
+            #set index as first column
+            Global.col = Global.col.set_index(index_name)
 
             #collect genotype names
             geno = []
