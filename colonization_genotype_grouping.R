@@ -38,6 +38,10 @@ rm(list=ls())
 #transfer data from csv file into variable
 quantif = read.csv(file.choose())
 
+#clean data frame from rows or columns made of NA only
+quantif <- quantif[quantif[,1]!='',] #for rows
+quantif <- quantif[, colSums(is.na(quantif)) != nrow(quantif)] #for columns
+
 #generates a vector containing the unique names of genotypes
 genotypes = unique(quantif[,1])
 
@@ -121,7 +125,7 @@ for(i in 1:length(struct))
 {
   for(j in 1:length(genotypes))
   {
-    stripchart(quantif_numb[,i][start_rows[j]:end_rows[j]], at = (begin_group[j] + i - 1), add=T, vertical=T, pch=i,
+    stripchart(quantif_numb[,i][start_rows[j]:end_rows[j]], at = (begin_group[j] + i - 1), add=T, vertical=T, pch=19,
                cex = .5)
   }
 }
