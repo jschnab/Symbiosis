@@ -13,14 +13,15 @@ colonization_crossbar <- function(grouping="genotype"){
   col2 <- melt(data=col, id.vars=colnames(col)[1])
   
   #the next two lines serve to maintain original genotype order from csv file
-  # make sure the header for the column containing genotype names is "genotype"
+  #name of the first column is changed to 'genotype'
   genotypes = unique(col[,1])
+  colnames(col2)[1] <- "genotype"
   col2 <- mutate(col2, genotype=factor(genotype, levels=genotypes))
   
   #calculate median after grouping data by genotype
   summary_data2 <- col2 %>%
     group_by(genotype, variable) %>%
-    summarise(median=median(value))
+    summarise(median=median(value, na.rm=TRUE))
   
   #plots median as bar and individual data points as points with color corresponding to fungal structures
   #vertical bars are added to separate the genotypes
