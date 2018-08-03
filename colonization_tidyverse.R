@@ -32,6 +32,7 @@ colonization_crossbar <- function(grouping="genotype"){
   #vertical bars are added to separate the genotypes
   #first calculate the position of vertical separators
   v_pos <- seq(from=1.5, to=length(genotypes) -0.5, by=1)
+  h_pos <- seq(from=0, to=100, by=12.5)
   ggplot() +
     geom_crossbar(data=summary_data2,
                   mapping=aes(x=genotype, 
@@ -47,12 +48,14 @@ colonization_crossbar <- function(grouping="genotype"){
     labs(color="Fungal structures") +
     ylab("Root length colonization (%)") +
     theme_classic() +
-    geom_vline(xintercept=v_pos, color="grey80")
+    geom_vline(xintercept=v_pos, color="grey70", size=1) +
+    geom_hline(yintercept=h_pos, color="grey75", linetype="dotted")
   }
   
   #grouping by structure
   else if(grouping=="structure"){
     v_pos <- seq(from=1.5, to=length(genotypes) -0.5, by=1)
+    h_pos <- seq(from=0, to=100, by=12.5)
     ggplot() +
       geom_crossbar(data=summary_data2,
                     mapping=aes(x=variable, 
@@ -68,7 +71,8 @@ colonization_crossbar <- function(grouping="genotype"){
       labs(color="Genotypes") +
       ylab("Root length colonization (%)") +
       theme_classic() +
-      geom_vline(xintercept=v_pos, color="grey80")
+      geom_vline(xintercept=v_pos, color="grey70", size=1) +
+      geom_hline(yintercept=h_pos, color="grey75", linetype="dotted")
   }
 }
 
