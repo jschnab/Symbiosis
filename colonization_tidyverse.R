@@ -56,6 +56,7 @@ colonization_barchart <- function(grouping="genotype"){
   #the next two lines serve to maintain original genotype order from csv file
   # make sure the header for the column containing genotype names is "genotype"
   genotypes = unique(col[,1])
+  colnames(col2)[1] <- "genotype"
   col2 <- mutate(col2, genotype=factor(genotype, levels=genotypes))
   
   #calculate median after grouping data by genotype and fungal structure
