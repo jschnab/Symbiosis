@@ -1,5 +1,5 @@
 #script which generates a barplot from colonization data
-#written by Jonathan Schnabel, December 2017 (last update March 2018)
+#written by Jonathan Schnabel, December 2017 (last update August 2018)
 #licence GPL
 
 #TO DO: change window icon
@@ -30,8 +30,9 @@
 #             from a text file to avoid calculating data on the fly
 
 # 05/03/2018  modified the way the legend is handled, removed "pad", set "loc" as "center left" and
-#             added the bbox_to_anchor parameter. To avoid cutting the legend, added "bbox_inches ='tight'"
-#             argument when saving the figure.
+#             added the bbox_to_anchor parameter. To avoid cutting the legend, 
+#             added "bbox_inches ='tight'" argument when saving the figure.
+
 
 # 17/03/2018  addition of "Save as" options, the figure is stored in the new "Global" class
 #             and the "saveas" functions in the "Application" class calls it to save the figure
@@ -48,6 +49,8 @@
 
 # 02/08/2018 add instructions to remove NaN from dataframe before processing
 #            the name of the index is not a problem now (cf 30/04/2018)
+
+# 06/08/2018 modified to comply with PEP8 (spaces around commas and '=')
 
 from tkinter import *
 from tkinter import filedialog
@@ -77,71 +80,71 @@ class Global(object):
     
 class MenuBar(Frame):
     """drop-down menu bar"""
-    def __init__(self, boss = None):
-        Frame.__init__(self, borderwidth = 2)
+    def __init__(self, boss=None):
+        Frame.__init__(self, borderwidth=2)
 
         ### <File> menu ###
-        fileMenu = Menubutton(self, text ='File')
-        fileMenu.pack(side =LEFT, padx ='3')
+        fileMenu = Menubutton(self, text='File')
+        fileMenu.pack(side=LEFT, padx='3')
         #drop-down part
         me1 = Menu(fileMenu)
         #sub-menu for "save as" menu
         me4 = Menu(me1)
-        me4.add_command(label ='pdf', underline =0,
-                        command =boss.saveas_pdf)
-        me4.add_command(label ='png', underline =0,
-                        command =boss.saveas_png)
-        me4.add_command(label ='svg', underline =0,
-                        command =boss.saveas_svg)
-        me4.add_command(label ='eps', underline =0,
-                        command =boss.saveas_eps)
+        me4.add_command(label='pdf', underline=0,
+                        command=boss.saveas_pdf)
+        me4.add_command(label='png', underline=0,
+                        command=boss.saveas_png)
+        me4.add_command(label='svg', underline=0,
+                        command=boss.saveas_svg)
+        me4.add_command(label='eps', underline=0,
+                        command=boss.saveas_eps)
         #sub-menu integration
-        me1.add_cascade(label ='Save as', underline =0, menu =me4)
+        me1.add_cascade(label='Save as', underline=0, menu=me4)
         #add quit button
-        me1.add_command(label ='Quit', underline =0, command =boss.quit)
+        me1.add_command(label='Quit', underline=0, command=boss.quit)
         #menu integration
-        fileMenu.configure(menu =me1)
+        fileMenu.configure(menu=me1)
 
         ### <Group by> menu ###
-        groupbyMenu = Menubutton(self, text = 'Group by')
-        groupbyMenu.pack(side = LEFT, padx ='3')
+        groupbyMenu = Menubutton(self, text= 'Group by')
+        groupbyMenu.pack(side=LEFT, padx='3')
         self.me1 = Menu(groupbyMenu)
         #tkinter variable
         self.group_by = IntVar()
         #drop-down part
         for (v, lab) in [(0, 'Genotype'), (1, 'Structure')]:
-            self.me1.add_radiobutton(label =lab, variable =self.group_by,
-                                     value =v, command =None)
+            self.me1.add_radiobutton(label=lab, variable=self.group_by,
+                                     value=v, command=None)
         #integrate to menu
-        groupbyMenu.configure(menu = self.me1)
+        groupbyMenu.configure(menu=self.me1)
 
         ### <Color menu ###
-        colorMenu = Menubutton(self, text = 'Color')
-        colorMenu.pack(side = LEFT)
+        colorMenu = Menubutton(self, text='Color')
+        colorMenu.pack(side=LEFT)
         self.me3 = Menu(colorMenu)
         #tkinter variables
         self.color = IntVar()
         #drop-down part of the menu
         for (v, lab) in [(0, 'Blues'), (1, 'Color blind'), (2, 'Rainbow')]:
-            self.me3.add_radiobutton(label =lab, variable =self.color,
-                                     value =v, command =self.changeCol)
+            self.me3.add_radiobutton(label=lab, variable=self.color,
+                                     value=v, command=self.changeCol)
         #integrate to menu
-        colorMenu.configure(menu = self.me3)
+        colorMenu.configure(menu=self.me3)
 
         ### <Process> menu ###
-        open_csvMenu = Menubutton(self, text = 'Process')
-        open_csvMenu.pack(side = LEFT, padx ='3')
+        open_csvMenu = Menubutton(self, text='Process')
+        open_csvMenu.pack(side=LEFT, padx='3')
         me2 = Menu(open_csvMenu)
         #drop-down part
-        me2.add_command(label = 'Analyze csv file', command = boss.process_csv)
-        me2.add_command(label = 'Perform statistical test', command = boss.do_stat_test)
+        me2.add_command(label='Analyze csv file', command=boss.process_csv)
+        me2.add_command(label='Perform statistical test', command=boss.do_stat_test)
         #integrate to menu
-        open_csvMenu.configure(menu = me2)
+        open_csvMenu.configure(menu=me2)
 
         ### <Statistics> menu ###
         self.samples = {} #dictionary for samples
-        self.statMenu = Menubutton(self, text ="Statistics")
-        self.statMenu.pack(side =LEFT, padx ='3')
+        self.statMenu = Menubutton(self, text="Statistics")
+        self.statMenu.pack(side=LEFT, padx='3')
         #drop-down part
         self.me5 = Menu(self.statMenu)
         #tkinter variable
@@ -149,38 +152,38 @@ class MenuBar(Frame):
         #dropdown part
         for (v, lab) in [(0, 'Mann-Whitney test'),
                          (1, 'Kruskal-Wallis-Dunn test')]:
-            self.me5.add_radiobutton(label =lab, variable =self.stat_test,
-                                     value =v, command =None)
+            self.me5.add_radiobutton(label=lab, variable=self.stat_test,
+                                     value=v, command=None)
         #integrate to menu
-        self.statMenu.configure(menu = self.me5)
+        self.statMenu.configure(menu=self.me5)
         
-        self.palettes = (((00,00,1),#blues
-                  (.125,.125,1),
-                  (.25,.25,1),
-                  (.375,.375,1),
-                  (.5,.5,1),
-                  (.625,.625,1),
-                  (.75,.75,1),
-                  (.875,.875,1),
-                  (.975,.975,1)),
-                ((.5,.5,.5),#color blind
-                  (.9,.6,00),
-                  (.35,.7,.9),
-                  (00,.6,.5),
-                  (.95,.9,.25),
-                  (00,.45,.7),
-                  (.8,.4,.00),
-                  (.8,.6,.7),
-                  (.14,1,.14)),
-                ((.5,.5,.5),#rainbow
-                  (.93,.51,.93),
-                  (.6,.2,.9),
-                  (00,00,1),
-                  (00,1,00),
-                  (1,1,00),
-                  (1,.55,00),
-                  (1,00,00),
-                  (.7,.13,.13)))
+        self.palettes = (((00, 00, 1),#blues
+                  (.125, .125, 1),
+                  (.25, .25, 1),
+                  (.375, .375, 1),
+                  (.5, .5, 1),
+                  (.625, .625, 1),
+                  (.75, .75, 1),
+                  (.875, .875, 1),
+                  (.975, .975, 1)),
+                ((.5, .5, .5),#color blind
+                  (.9, .6, 00),
+                  (.35, .7, .9),
+                  (00, .6, .5),
+                  (.95, .9, .25),
+                  (00, .45, .7),
+                  (.8, .4, .00),
+                  (.8, .6, .7),
+                  (.14, 1, .14)),
+                ((.5, .5, .5),#rainbow
+                  (.93, .51, .93),
+                  (.6, .2, .9),
+                  (00, 00, 1),
+                  (00, 1, 00),
+                  (1, 1, 00),
+                  (1, .55, 00),
+                  (1, 00, 00),
+                  (.7, .13, .13)))
 
     def changeCol(self):
        self.col = []
@@ -190,15 +193,15 @@ class MenuBar(Frame):
 
 class Application(Frame):
     """main application"""
-    def __init__(self, boss = None):
+    def __init__(self, boss=None):
         Frame.__init__(self)
         self.master.title('PyMS 0.8.0')
         self.mBar = MenuBar(self)
         self.mBar.me1.invoke(1)
         self.mBar.me3.invoke(2)
         self.mBar.pack()
-        self.can = Canvas(self, bg = 'light grey', height = 0, width = 250,\
-                          borderwidth = 2)
+        self.can = Canvas(self, bg='light grey', height=0, width=250,\
+                          borderwidth=2)
         self.can.pack()
         self.pack()
 
@@ -206,25 +209,25 @@ class Application(Frame):
         """Save plot as pdf file"""
         fi_name = Global.file_name.split('.')[0] + '-' \
                              + str(Global.export_number_fig) + '.pdf'
-        plt.savefig(fname = fi_name, bbox_inches ='tight')
+        plt.savefig(fname=fi_name, bbox_inches='tight')
 
     def saveas_png(self):
         """Save plot as png file"""
         fi_name = Global.file_name.split('.')[0] + '-' \
                              + str(Global.export_number_fig) + '.png'
-        plt.savefig(fname = fi_name, bbox_inches ='tight', dpi =300)
+        plt.savefig(fname=fi_name, bbox_inches='tight', dpi=300)
 
     def saveas_eps(self):
         """Save plot as eps file"""
         fi_name = Global.file_name.split('.')[0] + '-' \
                              + str(Global.export_number_fig) + '.eps'
-        plt.savefig(fname = fi_name, bbox_inches ='tight')
+        plt.savefig(fname=fi_name, bbox_inches='tight')
 
     def saveas_svg(self):
         """Save plot as svg file"""
         fi_name = Global.file_name.split('.')[0] + '-' \
                              + str(Global.export_number_fig) + '.svg'
-        plt.savefig(fname = fi_name, bbox_inches ='tight')
+        plt.savefig(fname=fi_name, bbox_inches='tight')
 
     def do_stat_test(self):
         """Perform the statistical test of choice"""
@@ -242,7 +245,7 @@ class Application(Frame):
 
         #extracts selected samples for statistical test
         geno_select = []
-        for key,value in self.mBar.samples.items():
+        for key, value in self.mBar.samples.items():
             if value.get() == 1:
                 geno_select.append(key)
 
@@ -254,35 +257,35 @@ class Application(Frame):
                     geno_test.append(j)
         
         #generates all combinations of genotype pairs
-        comp = tuple(combinations(geno_test,2))
+        comp = tuple(combinations(geno_test, 2))
 
         #calculate p-values from Mann-Whitney test and put them into list
         p_val = []
-        for pp, (ii, jj) in enumerate(comp):
+        for _, (ii, jj) in enumerate(comp):
             for s in Global.struct:
-                p_val.append(MW.MW_exact(Global.col[s][Global.col.index==ii],
-                                          Global.col[s][Global.col.index==jj])[1])
+                p_val.append(MW.MW_exact(Global.col[s][Global.col.index == ii],
+                                          Global.col[s][Global.col.index == jj])[1])
 
         #generates boolean list indicating whether p-value < or = alpha
-        test = [x <= y for (x,y) in zip(p_val, [alpha]*len(p_val))]
+        #test = [x <= y for (x, y) in zip(p_val, [alpha] * len(p_val))]
         
         #put p-values in array then dataframe
         #p_arr = np.array(test).reshape(len(comp), len(Global.struct))
-        p_val = [round(i,4) for i in p_val]
+        p_val = [round(i, 4) for i in p_val]
         p_arr = np.array(p_val).reshape(len(comp), len(Global.struct))
 
-        df=pd.DataFrame(p_arr, columns=Global.struct)
+        df = pd.DataFrame(p_arr, columns=Global.struct)
 
         df_row = []
         for pp, (ii, jj) in enumerate(comp):
             df_row.append([ii, jj])
-        df.insert(loc =0, column ='Genotypes', value =df_row)
+        df.insert(loc=0, column='Genotypes', value=df_row)
         df.set_index('Genotypes')
 
 
         #saves p-values dataframe in text file
         with open(Global.file_name.split('.')[0] + '_MW_pval' + '-' \
-                  + str(Global.export_number_stats) + '.txt','w') as outfile:
+                  + str(Global.export_number_stats) + '.txt', 'w') as outfile:
             outfile.write('Mann-Whitney two-sided test for genotype \
 combinations indicated in the \n"Genotypes" columns and fungal structures \
 indicated as column headers.\nValues indicate upper boundary for p-value.\n\n')
@@ -308,16 +311,16 @@ indicated as column headers.\nValues indicate upper boundary for p-value.\n\n')
         for s in Global.struct:
             data = []
             for g in geno_test:
-                data.append(list(Global.col[s][Global.col.index==g]))
-            p_val.append(dunn_test.kw_dunn(data, method ='fdr_bh')[3])
+                data.append(list(Global.col[s][Global.col.index == g]))
+            p_val.append(dunn_test.kw_dunn(data, method='fdr_bh')[3])
 
         #generates all combinations of genotype pairs
-        comp = tuple(combinations(geno_test,2))
+        comp = tuple(combinations(geno_test, 2))
 
         df = pd.DataFrame()
-        i=0
+        i = 0
         while i < len(Global.struct):
-            df.insert(loc =i, value =p_val[i], column =Global.struct[i])
+            df.insert(loc=i, value=p_val[i], column=Global.struct[i])
             i += 1
         
         #put p-values in array then dataframe
@@ -328,13 +331,13 @@ indicated as column headers.\nValues indicate upper boundary for p-value.\n\n')
         df_row = []
         for pp, (ii, jj) in enumerate(comp):
             df_row.append([ii, jj])
-        df.insert(loc =0, column ='Genotypes', value =df_row)
+        df.insert(loc=0, column='Genotypes', value=df_row)
         df.set_index('Genotypes')
 
 
         #saves p-values dataframe in text file
         with open(Global.file_name.split('.')[0] + '_Dunn_pval' + '-' \
-                  + str(Global.export_number_stats) + '.txt','w') as outfile:
+                  + str(Global.export_number_stats) + '.txt', 'w') as outfile:
             outfile.write('p-values of Dunn\'s test for genotype \
 combinations indicated in the \n"Genotypes" columns and fungal structures \
 indicated as column headers.\n\n')
@@ -388,7 +391,7 @@ combination"""
             width = 1 / (len(Global.struct) + 1)
 
             #plotting bars
-            Global.figure = plt.figure(figsize = (10, 5))
+            Global.figure = plt.figure(figsize=(10, 5))
             Global.ax = Global.figure.add_axes([0.1, 0.1, 0.75, 0.85])
 
             #draw bar plot from medians
@@ -397,20 +400,20 @@ combination"""
             s = 0
             while s < len(Global.struct):
                 plt.bar([p + s * width for p in pos], medians[Global.struct[s]], width,
-                        alpha = 1, color = colors[s], edgecolor = 'black',
-                        linewidth = .5, zorder = 3)
+                        alpha=1, color=colors[s], edgecolor='black',
+                        linewidth=.5, zorder=3)
                 s += 1
                 #add legend
-                Global.ax.legend(Global.struct, bbox_to_anchor =(1,0.5),
-                                 loc = 'center left')
+                Global.ax.legend(Global.struct, bbox_to_anchor=(1, 0.5),
+                                 loc='center left')
 
             #draw scatter plot from individual data points
             #first you need a list with data coordinates from the 'col' DataFrame
             start = [0]
-            end = [number_rep[0] -1]
+            end = [number_rep[0] - 1]
             counter = 1
             while counter < len(geno):
-                start.append(end[counter -1] +1)
+                start.append(end[counter - 1] + 1)
                 end.append(end[counter -1] + number_rep[counter])
                 counter += 1
 
@@ -419,11 +422,11 @@ combination"""
             while s < len(Global.struct):
                 i = 0
                 while i < len(geno):
-                    for k in range(start[i], end[i] +1):
+                    for k in range(start[i], end[i] + 1):
                         plt.plot(i + s * width, Global.col[Global.struct[s]].values[k],
-                                 c = 'black', marker = 'o', fillstyle = 'full',
-                                 zorder = 4, mew = .5, markersize = 1.5,
-                                 clip_on =False)
+                                 c='black', marker='o', fillstyle='full',
+                                 zorder=4, mew=.5, markersize=1.5,
+                                 clip_on=False)
                     i += 1
                 s += 1
 
@@ -431,15 +434,15 @@ combination"""
             Global.ax.set_ylabel('Total root length colonization (%)')
 
             #set position of x ticks but no display
-            Global.ax.set_xticks([p + width * ((len(Global.struct) -1) / 2) for p in pos])
-            Global.ax.tick_params(axis = 'x', color = 'white')
+            Global.ax.set_xticks([p + width * ((len(Global.struct) - 1) / 2) for p in pos])
+            Global.ax.tick_params(axis='x', color='white')
 
             #set label for x ticks
             Global.ax.set_xticklabels(geno)
 
             #set y axis limits
             plt.ylim([0, 100])
-            plt.xlim([min(pos) -width, max(pos) +len(Global.struct) * width])
+            plt.xlim([min(pos) - width, max(pos) + len(Global.struct) * width])
 
             #remove figure frame
             Global.ax.spines['top'].set_visible(False)
@@ -461,15 +464,15 @@ combination"""
             self.mBar.stat_test = IntVar()
             for (v, lab) in [(0, 'Mann-Whitney test'),
                              (1, 'Kruskal-Wallis-Dunn test')]:
-                self.mBar.me5.add_radiobutton(label =lab, variable =self.mBar.stat_test,
-                                              value =v, command =None)
+                self.mBar.me5.add_radiobutton(label=lab, variable=self.mBar.stat_test,
+                                              value=v, command=None)
             self.mBar.me6 = Menu(self.mBar.me5)
             self.mBar.samples = {} #re-initialize dictionary
-            for (v, lab) in list(zip(range(len(geno)),geno)):
-                self.mBar.samples['{0}'.format(lab)]= IntVar()
-                self.mBar.me6.add_checkbutton(label =lab, variable =self.mBar.samples[lab], command =None, onvalue =1, offvalue =0)
-            self.mBar.me5.add_cascade(label ='Select samples', menu =self.mBar.me6)
-            self.mBar.statMenu.configure(menu = self.mBar.me5)
+            for (v, lab) in list(zip(range(len(geno)), geno)):
+                self.mBar.samples['{0}'.format(lab)] = IntVar()
+                self.mBar.me6.add_checkbutton(label=lab, variable=self.mBar.samples[lab], command=None, onvalue=1, offvalue=0)
+            self.mBar.me5.add_cascade(label='Select samples', menu=self.mBar.me6)
+            self.mBar.statMenu.configure(menu=self.mBar.me5)
             self.mBar.pack()
 
         elif self.mBar.group_by.get() == 1:    #group by structure
@@ -500,7 +503,7 @@ combination"""
             number_rep = number_rep.reindex(geno)
 
             #collect names of fungal structures
-            Global.struct = Global.col.columns[0:]
+            Global.struct = Global.col.columns[:]
 
             #calculate medians and invert axes of dataframe
             col_group = Global.col.groupby(Global.col.index) # group data by genotype
@@ -513,7 +516,7 @@ combination"""
             width = 1 / (len(geno) + 1)
 
             #plotting bars
-            Global.figure = plt.figure(figsize = (10, 5))
+            Global.figure = plt.figure(figsize=(10, 5))
             Global.ax = Global.figure.add_axes([0.1, 0.1, 0.75, 0.85])
 
             #draw bar plot from medians
@@ -522,20 +525,20 @@ combination"""
             s = 0
             while s < len(geno):
                 plt.bar([p + s * width for p in pos], medians_trans[geno[s]],
-                        width, alpha =1, color =colors[s], edgecolor ='black',
-                        linewidth = .5, zorder = 3)
+                        width, alpha=1, color=colors[s], edgecolor='black',
+                        linewidth=.5, zorder=3)
                 s += 1
                 #add legend
-                Global.ax.legend(geno, bbox_to_anchor =(1,0.5), loc = 'center left')
+                Global.ax.legend(geno, bbox_to_anchor=(1, 0.5), loc='center left')
 
             #draw scatter plot from individual data points
             #first you need a list with data coordinates from the 'col' DataFrame
             start = [0]
-            end = [number_rep[0] -1]
+            end = [number_rep[0] - 1]
             counter = 1
             while counter < len(geno):
-                start.append(end[counter -1] +1)
-                end.append(end[counter -1] + number_rep[counter])
+                start.append(end[counter - 1] + 1)
+                end.append(end[counter - 1] + number_rep[counter])
                 counter += 1
 
             #browse data and add individual points on the graph
@@ -543,11 +546,11 @@ combination"""
             while s < len(Global.struct):
                 i = 0
                 while i < len(geno):
-                    for k in range(start[i], end[i] +1):
+                    for k in range(start[i], end[i] + 1):
                         plt.plot(s + i * width, Global.col[Global.struct[s]].values[k],
-                                 c = 'black', marker = 'o', fillstyle = 'full',
-                                 zorder = 4, mew = .5, markersize = 1.5,
-                                 clip_on =False)
+                                 c='black', marker='o', fillstyle='full',
+                                 zorder=4, mew=.5, markersize=1.5,
+                                 clip_on=False)
                     i += 1
                 s += 1
 
@@ -555,15 +558,15 @@ combination"""
             Global.ax.set_ylabel('Total root length colonization (%)')
 
             #set position of x ticks but no display
-            Global.ax.set_xticks([p + width * ((len(geno) / 2 -.5)) for p in pos])
-            Global.ax.tick_params(axis = 'x', color = 'white')
+            Global.ax.set_xticks([p + width * ((len(geno) / 2 - .5)) for p in pos])
+            Global.ax.tick_params(axis='x', color='white')
 
             #set label for x ticks
             Global.ax.set_xticklabels(Global.struct)
 
             #set y axis limits
             plt.ylim([0, 100])
-            plt.xlim([min(pos) -width, max(pos) +len(geno) * width +width/2])
+            plt.xlim([min(pos) - width, max(pos) + len(geno) * width + width / 2])
 
             #remove figure frame
             Global.ax.spines['top'].set_visible(False)
@@ -584,15 +587,15 @@ combination"""
             self.mBar.stat_test = IntVar()
             for (v, lab) in [(0, 'Mann-Whitney test'),
                              (1, 'Kruskal-Wallis-Dunn test')]:
-                self.mBar.me5.add_radiobutton(label =lab, variable =self.mBar.stat_test,
-                                              value =v, command =None)
+                self.mBar.me5.add_radiobutton(label=lab, variable=self.mBar.stat_test,
+                                              value=v, command=None)
             self.mBar.me6 = Menu(self.mBar.me5)
             self.mBar.samples = {} #re-initialize dictionary
-            for (v, lab) in list(zip(range(len(geno)),geno)):
-                self.mBar.samples['{0}'.format(lab)]= IntVar()
-                self.mBar.me6.add_checkbutton(label =lab, variable =self.mBar.samples[lab], command =None, onvalue =1, offvalue =0)
-            self.mBar.me5.add_cascade(label ='Select samples', menu =self.mBar.me6)
-            self.mBar.statMenu.configure(menu = self.mBar.me5)
+            for (v, lab) in list(zip(range(len(geno)), geno)):
+                self.mBar.samples['{0}'.format(lab)] = IntVar()
+                self.mBar.me6.add_checkbutton(label=lab, variable=self.mBar.samples[lab], command=None, onvalue=1, offvalue=0)
+            self.mBar.me5.add_cascade(label='Select samples', menu=self.mBar.me6)
+            self.mBar.statMenu.configure(menu=self.mBar.me5)
             self.mBar.pack()
 
 if __name__ == '__main__':
